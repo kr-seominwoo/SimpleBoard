@@ -11,4 +11,14 @@ public class HomeController {
 	public String index() {
 		return "index";
 	}
+	
+	@RequestMapping("write")
+	public String write() {
+		return "write";
+	}
+	
+	@RequestMapping("regist")
+	public String regist() {
+		return "redirect:index";
+	}
 }
