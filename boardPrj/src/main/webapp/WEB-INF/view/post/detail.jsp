@@ -34,6 +34,24 @@
         <br>
         <input class="btn" type="submit" value="수정하기" />
     </form>
+    
+    <h3>댓글</h3>
+    <form>
+	    <input type="text" placeholder="작성자"/>
+	    <input type="text" placeholder="비밀번호"/>
+	    <input type="text" placeholder="댓글을 입력하세요"/>
+	    <input type="submit" value="제출"/>
+    </form>
+    <br>
+    <br>
+    <table border="1">
+        <tbody>
+        	<tr>
+        		<td>제임슨</td>
+        		<td>글이 좋아요</td>
+        	</tr>
+        </tbody>
+    </table>
 </body>
 
 </html>
