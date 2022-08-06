@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <form>
+    <form action="edit" method="get">
         <h2>제목</h2>
         <table border="1">
             <tbody>
@@ -32,7 +32,12 @@
             </tbody>
         </table>
         <br>
+        <input type="text" name="password" placeholder="비밀번호를 입력하세요">
         <input class="btn" type="submit" value="수정하기" />
+    </form>
+    <form action="delete" method="delete">    	
+        <input type="text" name="password" placeholder="비밀번호를 입력하세요">
+        <input class="btn" type="submit" value="삭제하기" />
     </form>
     
     <h3>댓글</h3>
