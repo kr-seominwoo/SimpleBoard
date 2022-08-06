@@ -33,18 +33,24 @@
                         <input type="text" name="content" placeholder="내용을 입력하세요" />
                     </td>
                 </tr>
-                <tr>
-                    <th>해시 태그</th>
-                    <td>
-                        <input type="text" name="content" placeholder="해시태그" />
-                        <button>추가</button>
-                    </td>
-                </tr>
             </tbody>
         </table>
+        <input id="hashtag-input" type="text" placeholder="해시태그" />
+        <button type="button" onclick="addHashTag()">추가</button>
+        <table id="hashtag-table">  
+            <thead>
+                <tr>
+                  <th scope="col">해시태그</th>
+                </tr>
+              </thead>      
+            <tbody>
+            </tbody>            
+        </table>
+        
         <input class="btn" type="submit" value="게시하기" />
 
     </form>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/write.js"></script>
 </body>
-
 </html>
