@@ -14,6 +14,16 @@ public class PostController {
 	
 	@RequestMapping("edit")
 	public String edit() {
+		return "/post/edit";
+	}
+	
+	@RequestMapping("update")
+	public String update() {
 		return "redirect:/post/detail";
+	}
+	
+	@RequestMapping("delete")
+	public String delete() {
+		return "redirect:/index";
 	}
 }
