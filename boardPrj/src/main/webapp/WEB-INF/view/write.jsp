@@ -33,6 +33,12 @@
                         <input type="text" name="content" placeholder="내용을 입력하세요" />
                     </td>
                 </tr>
+                <tr>
+                    <th>비밀번호</th>
+                    <td>
+                        <input type="text" name="password" placeholder="비밀번호를 입력하세요" />
+                    </td>
+                </tr>
             </tbody>
         </table>
         <input id="hashtag-input" type="text" placeholder="해시태그" />
