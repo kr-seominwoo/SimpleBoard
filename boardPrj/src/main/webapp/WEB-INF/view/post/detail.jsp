@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>글 작성</title>
+    <title>글 수정</title>
 </head>
 
 <body>
@@ -13,10 +15,14 @@
         <h2>제목</h2>
         <table border="1">
             <tbody>
+            	<tr>
+            		<th>작성자</th>
+            		<td>작성자</td>
+            	</tr>
                 <tr>
                     <th>내용</th>
                     <td>
-                        <input type="text" name="content" placeholder="내용을 입력하세요" />
+                    내용                     
                     </td>
                 </tr>
                 <tr>

@@ -28,7 +28,7 @@
     <tbody>
       <tr>
         <td>번호</td>
-        <td>제목</td>
+        <td><a href="post/detail">제목</a></td>
         <td>작성자</td>
         <td>작성일시</td>
         <td>댓글수</td>

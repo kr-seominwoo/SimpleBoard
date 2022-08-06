@@ -4,11 +4,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/post/")
 public class PostController {
 	
 	@RequestMapping("detail")
 	public String detail() {
-		return "detail";
-	}	
+		return "/post/detail";
+	}
+	
+	@RequestMapping("edit")
+	public String edit() {
+		return "redirect:/post/detail";
+	}
 }
