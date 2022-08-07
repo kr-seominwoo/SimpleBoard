@@ -56,7 +56,7 @@
         <input class="btn" type="submit" value="게시하기" />
 
     </form>
-    <script src="js/jquery.min.js"></script>
     <script src="js/write.js"></script>
+    <script src="js/jquery.min.js"></script>
 </body>
 </html>

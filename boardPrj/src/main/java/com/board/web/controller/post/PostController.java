@@ -6,6 +6,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/post/")
 public class PostController {
+	@RequestMapping("list") 
+	public String list() {
+		return "/post/list";
+	}
+	
+	@RequestMapping("write")
+	public String write() {
+		return "/post/write";
+	}
+	
+	@RequestMapping("regist")
+	public String regist() {
+		return "redirect:/post/list";
+	}	
 	
 	@RequestMapping("detail")
 	public String detail() {
@@ -24,6 +38,6 @@ public class PostController {
 	
 	@RequestMapping("delete")
 	public String delete() {
-		return "redirect:/index";
+		return "redirect:/post/list";
 	}
 }
