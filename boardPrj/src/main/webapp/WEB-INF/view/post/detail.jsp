@@ -23,13 +23,11 @@
 			</tr>
 			<tr>
 				<th>작성일시</th>
-				<td><fmt:formatDate value="${post.postDate}"
-						pattern="yyyy-MM-dd hh-mm-ss" /></td>
+				<td><fmt:formatDate value="${post.postDate}" pattern="yyyy-MM-dd hh-mm-ss" /></td>
 			</tr>
 			<tr>
 				<th>수정일시</th>
-				<td><fmt:formatDate value="${post.modifyDate}"
-						pattern="yyyy-MM-dd hh-mm-ss" /></td>
+				<td><fmt:formatDate value="${post.modifyDate}" pattern="yyyy-MM-dd hh-mm-ss" /></td>
 			</tr>
 			<tr>
 				<th>내용</th>
@@ -46,12 +44,12 @@
 	<br>
 	<form action="edit" method="post">
 		<input style="display: none" type="number" readonly name="postNumber" value="${post.postNumber}" /> 
-		<input type="text" name="password" placeholder="비밀번호를 입력하세요">
+		<input type="text" name="password" required placeholder="비밀번호를 입력하세요">
 		<input class="btn" type="submit" value="수정하기" />
 	</form>
 	<form action="delete" method="post">
 		<input style="display: none" type="number" readonly name="postNumber" value="${post.postNumber}" /> 
-		<input type="text" name="password" placeholder="비밀번호를 입력하세요">
+		<input type="text" name="password" required placeholder="비밀번호를 입력하세요">
 		<input class="btn" type="submit" value="삭제하기" />
 	</form>
 
@@ -60,19 +58,33 @@
 		<input style="display: none" type="number" readonly name="postNumber" value="${post.postNumber}" /> 
 		<input type="text" name="writerId" placeholder="작성자" />
 		<input type="text" name="password" placeholder="비밀번호" />
-		<input type="text" name="content"  placeholder="댓글을 입력하세요" /> <input type="submit" value="제출" />
+		<input type="text" name="content" required placeholder="댓글을 입력하세요" /> <input type="submit" value="제출" />
 	</form>
 	<br>
 	<br>
 	<table border="1">
-		<tbody>
+		<thead>
+			<tr>
+				<th scope="col">작성자</th>
+				<th scope="col">내용</th>
+				<th scope="col">작성일시</th>
+				<th scope="col">삭제 비밀번호</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>		
 			<c:forEach var="comment" items="${post.commentList}">
+			<form action="deleteComment" method="post">
+				<input style="display: none" type="number" readonly name="postNumber" value="${comment.postNumber}" />
+				<input style="display: none" type="number" readonly name="commentNumber" value="${comment.commentNumber}" />
 				<tr>
 					<td>${comment.userId}</td>
-					<td>${comment.content}</td>
-					<td><fmt:formatDate value="${comment.commentDate}"
-							pattern="yyyy-MM-dd hh-mm-ss" /></td>
-				</tr>
+					<td width="300px">${comment.content}</td>
+					<td><fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd hh-mm-ss" /></td>
+					<td><input type="text" name="password" placeholder="비밀번호를 입력하세요"/></td>
+					<td><input type="submit" value="X"></td>
+				</tr>				
+			</form>
 			</c:forEach>
 
 		</tbody>
