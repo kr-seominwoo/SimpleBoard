@@ -79,6 +79,8 @@ public class JDBCPostService implements PostService {
 				String title = rs.getString("TITLE");
 				String writerId = rs.getString("USER_ID");
 				Date postDate = rs.getDate("POST_DATE");
+				
+				// 게시글의 댓글 수를 제대로 알아오도록 sql문 수정해야 함
 				int commentCount = 0;
 				int hit = rs.getInt("HIT");
 				int like = rs.getInt("LIKE");
@@ -135,8 +137,9 @@ public class JDBCPostService implements PostService {
 				String writerId = rs.getString("USER_ID");
 				String content = rs.getString("CONTENT");
 				Date commentDate = rs.getDate("COMMENT_DATE");
+				int commentNumber = rs.getInt("COMMENT_NUMBER");
 
-				Comment comment = new Comment(writerId, content, commentDate, postNumber);
+				Comment comment = new Comment(writerId, content, commentDate, postNumber, commentNumber);
 				commentList.add(comment);
 			}
 
@@ -162,7 +165,7 @@ public class JDBCPostService implements PostService {
 			return result;
 		}
 
-		String sqlPassword = "SELECT P.PASSWORD FROM POST P WHERE POST_NUMBER =" + postNumber;
+		String sqlPassword = "SELECT P.PASSWORD FROM POST P WHERE POST_NUMBER = " + postNumber;
 		try {
 			Connection con = dataSource.getConnection();
 			Statement st = con.createStatement();
@@ -172,7 +175,7 @@ public class JDBCPostService implements PostService {
 				String compare = rs.getString("PASSWORD");
 
 				if (encryptedPassword.equals(compare)) {
-					String sqlDeletePost = "DELETE FROM POST WHERE POST_NUMBER =" + postNumber;
+					String sqlDeletePost = "DELETE FROM POST WHERE POST_NUMBER = " + postNumber;
 					result += st.executeUpdate(sqlDeletePost);
 
 					String sqlDeleteComment = "DELETE FROM \"COMMENT\" WHERE POST_NUMBER = " + postNumber;
@@ -196,7 +199,7 @@ public class JDBCPostService implements PostService {
 	public int registComment(String writerId, String content, String password, int postNumber) {
 		int result = 0;
 
-		String sql = "INSERT INTO \"COMMENT\" (USER_ID, PASSWORD, CONTENT, POST_NUMBER) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO \"COMMENT\" (USER_ID, PASSWORD, CONTENT, POST_NUMBER, COMMENT_NUMBER) VALUES(?,?,?,?, COMMENT_NUMBER_SEQ.NEXTVAL)";
 		SHA256 sha256 = new SHA256();
 		String encryptedPassword = "";
 		try {
@@ -220,6 +223,46 @@ public class JDBCPostService implements PostService {
 			st.close();
 			con.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
+	public int deleteComment(String password, int commentNumber) {
+		int result = 0;
+
+		SHA256 sha256 = new SHA256();
+		String encryptedPassword = "";
+		try {
+			encryptedPassword = sha256.encrypt(password);
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+			return result;
+		}
+
+		String sqlPassword = "SELECT C.PASSWORD FROM \"COMMENT\" C WHERE COMMENT_NUMBER = " + commentNumber;
+		try {
+			Connection con = dataSource.getConnection();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sqlPassword);
+
+			if (rs.next()) {
+				String compare = rs.getString("PASSWORD");
+
+				if (encryptedPassword.equals(compare)) {
+					String sqlDeleteComment = "DELETE FROM \"COMMENT\" WHERE COMMENT_NUMBER = " + commentNumber;
+					result = st.executeUpdate(sqlDeleteComment);
+				}
+			} else {
+				return result;
+			}
+
+			st.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

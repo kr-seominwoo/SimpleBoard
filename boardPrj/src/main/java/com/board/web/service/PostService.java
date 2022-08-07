@@ -1,5 +1,6 @@
 package com.board.web.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.board.web.entity.Post;
@@ -11,4 +12,5 @@ public interface PostService {
 	Post getPost(int postNumber);
 	int deletePost(String password, int postNumber);
 	int registComment(String writerId, String content, String password, int postNumber);
+	int deleteComment(String password, int commentNumber);
 }

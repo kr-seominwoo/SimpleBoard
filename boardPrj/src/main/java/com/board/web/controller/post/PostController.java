@@ -1,5 +1,6 @@
 package com.board.web.controller.post;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,13 @@ public class PostController {
 	@PostMapping("registComment")
 	public String registComment(String writerId, String content, String password, int postNumber) {
 		this.service.registComment(writerId, content, password, postNumber);
+		
+		return "redirect:/post/detail?postNumber=" + postNumber;
+	}
+	
+	@PostMapping("deleteComment")
+	public String deleteComment(String password, int commentNumber, int postNumber) {
+		this.service.deleteComment(password, commentNumber);
 		
 		return "redirect:/post/detail?postNumber=" + postNumber;
 	}
