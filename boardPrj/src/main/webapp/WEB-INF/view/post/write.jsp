@@ -18,25 +18,25 @@
             	<tr>
                     <th>작성자</th>
                     <td>
-                        <input type="text" name="writerId" placeholder="작성자" />
+                        <input type="text" name="writerId" required placeholder="작성자" />
                     </td>
                 </tr>
                 <tr>
                     <th>제목</th>
                     <td>
-                        <input type="text" name="title" placeholder="제목" />
+                        <input type="text" name="title" required placeholder="제목" />
                     </td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td>
-                        <input type="text" name="content" placeholder="내용을 입력하세요" />
+                        <input type="text" name="content" required placeholder="내용을 입력하세요" />
                     </td>
                 </tr>
                 <tr>
                     <th>비밀번호</th>
                     <td>
-                        <input type="text" name="password" placeholder="비밀번호를 입력하세요" />
+                        <input type="text" name="password" required placeholder="비밀번호를 입력하세요" />
                     </td>
                 </tr>
             </tbody>
