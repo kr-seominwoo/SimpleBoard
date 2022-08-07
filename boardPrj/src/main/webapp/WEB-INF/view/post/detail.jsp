@@ -81,7 +81,7 @@
 					<td>${comment.userId}</td>
 					<td width="300px">${comment.content}</td>
 					<td><fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd hh-mm-ss" /></td>
-					<td><input type="text" name="password" placeholder="비밀번호를 입력하세요"/></td>
+					<td><input type="text" name="password" required placeholder="비밀번호를 입력하세요"/></td>
 					<td><input type="submit" value="X"></td>
 				</tr>				
 			</form>
