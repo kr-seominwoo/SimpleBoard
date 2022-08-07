@@ -35,7 +35,6 @@ public class PostController {
 	@PostMapping("regist")
 	public String regist(String writerId, String title, String content, String password, String[] hashTag) {
 		String hashTags = "";
-		int hashTagsCount = 0;
 		if (hashTag != null) {
 			StringBuilder builder = new StringBuilder();
 			for (int idx = 0; idx < hashTag.length; ++idx) {
@@ -46,11 +45,10 @@ public class PostController {
 				}
 			}
 
-			hashTagsCount = hashTag.length;
 			hashTags = builder.toString();
 		}
 
-		this.service.registPost(writerId, title, content, password, hashTags, hashTagsCount);
+		this.service.registPost(writerId, title, content, password, hashTags);
 		return "redirect:/post/list";
 	}
 
@@ -63,6 +61,7 @@ public class PostController {
 
 	@PostMapping("edit")
 	public String edit(String password, int postNumber) {
+		
 		return "/post/edit";
 	}
 
@@ -72,13 +71,13 @@ public class PostController {
 	}
 
 	@PostMapping("delete")
-	public String delete(int postNumber) {
+	public String delete(String password, int postNumber) {
+		this.service.deletePost(password, postNumber);
 		return "redirect:/post/list";
 	}
 	
 	@PostMapping("registComment")
 	public String registComment(String writerId, String content, String password, int postNumber) {
-		System.out.println("postNumber : " + postNumber);
 		this.service.registComment(writerId, content, password, postNumber);
 		
 		return "redirect:/post/detail?postNumber=" + postNumber;

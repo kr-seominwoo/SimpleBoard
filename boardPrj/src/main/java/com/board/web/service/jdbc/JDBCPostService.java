@@ -29,11 +29,10 @@ public class JDBCPostService implements PostService {
 	DataSource dataSource;
 
 	@Override
-	public int registPost(String writerId, String title, String content, String password, String hashtags,
-			int hashtagsCount) {
+	public int registPost(String writerId, String title, String content, String password, String hashtags) {
 		int result = 0;
 
-		String sql = "INSERT INTO POST(USER_ID, PASSWORD, TITLE, CONTENT, HASHTAGS, HASHTAGS_COUNT, POST_NUMBER) VALUES(?,?,?,?,?,?, POST_NUMBER_SEQ.NEXTVAL)";
+		String sql = "INSERT INTO POST(USER_ID, PASSWORD, TITLE, CONTENT, HASHTAGS, POST_NUMBER) VALUES(?,?,?,?,?, POST_NUMBER_SEQ.NEXTVAL)";
 		SHA256 sha256 = new SHA256();
 		String encryptedPassword = "";
 		try {
@@ -52,7 +51,6 @@ public class JDBCPostService implements PostService {
 			st.setString(3, title);
 			st.setString(4, content);
 			st.setString(5, hashtags);
-			st.setInt(6, hashtagsCount);
 
 			result = st.executeUpdate();
 
@@ -104,12 +102,13 @@ public class JDBCPostService implements PostService {
 		List<Comment> commentList = new ArrayList<>();
 
 		String sqlPost = "SELECT * FROM POST P WHERE P.POST_NUMBER = " + postNumber;
-		String sqlComment = "SELECT * FROM \"COMMENT\" C WHERE C.POST_NUMBER = " + postNumber + " ORDER BY C.COMMENT_DATE DESC";
+		String sqlComment = "SELECT * FROM \"COMMENT\" C WHERE C.POST_NUMBER = " + postNumber
+				+ " ORDER BY C.COMMENT_DATE DESC";
 
 		try {
 			Connection con = this.dataSource.getConnection();
-			Statement stPost = con.createStatement();
-			ResultSet rs = stPost.executeQuery(sqlPost);
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sqlPost);
 
 			if (rs.next()) {
 				String writerId = rs.getString("USER_ID");
@@ -130,27 +129,67 @@ public class JDBCPostService implements PostService {
 				post = new Post(writerId, title, content, postDate, modifyDate, hashtagList, like, hit, postNumber,
 						commentList);
 			}
-			
-			Statement stComment = con.createStatement();
-			rs = stComment.executeQuery(sqlComment);
-			
+
+			rs = st.executeQuery(sqlComment);
 			while (rs.next()) {
 				String writerId = rs.getString("USER_ID");
 				String content = rs.getString("CONTENT");
 				Date commentDate = rs.getDate("COMMENT_DATE");
-				
+
 				Comment comment = new Comment(writerId, content, commentDate, postNumber);
 				commentList.add(comment);
 			}
-			
 
-			stPost.close();
+			st.close();
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return post;
+	}
+
+	@Override
+	public int deletePost(String password, int postNumber) {
+		int result = 0;
+
+		SHA256 sha256 = new SHA256();
+		String encryptedPassword = "";
+		try {
+			encryptedPassword = sha256.encrypt(password);
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+			return result;
+		}
+
+		String sqlPassword = "SELECT P.PASSWORD FROM POST P WHERE POST_NUMBER =" + postNumber;
+		try {
+			Connection con = dataSource.getConnection();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sqlPassword);
+
+			if (rs.next()) {
+				String compare = rs.getString("PASSWORD");
+
+				if (encryptedPassword.equals(compare)) {
+					String sqlDeletePost = "DELETE FROM POST WHERE POST_NUMBER =" + postNumber;
+					result += st.executeUpdate(sqlDeletePost);
+
+					String sqlDeleteComment = "DELETE FROM \"COMMENT\" WHERE POST_NUMBER = " + postNumber;
+					result += st.executeUpdate(sqlDeleteComment);
+				}
+			} else {
+				return result;
+			}
+
+			st.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 	@Override
