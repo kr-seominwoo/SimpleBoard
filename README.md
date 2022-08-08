@@ -19,7 +19,6 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
 
 ## 설치방법 (IDE에서 사용)
 ### Prerequisites
-* JRE 17
 * IDE
    * Spring Tools Suite(STS) 
       * eclipse enterpise java and Web Developer Tools 3.26
@@ -64,10 +63,16 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
    내 프로젝트 -> Run as -> Run on Server
    ```
 
-## 프로젝트 Maven pom.xml dependencies
+## Maven pom.xml dependencies
  * tomcat-api 9.0.62
  * spring-webmvc 5.2.22.RELEASE
  * spring-jdbc 5.2.22.RELEASE
  * ojdbc10 19.14.0.0
  * jstl 1.2
+## Maven pom.xml properties
+ * maven.compiler.source 1.8
+ * maven.compiler.target 1.8
 
+
+## 환경
+ * Windows 10
