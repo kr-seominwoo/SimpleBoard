@@ -21,10 +21,14 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
 ### Prerequisites
 * JRE 17
 * IDE
-   * Spring Tools Suite(STS)
-      -> maven 사용
+   * Spring Tools Suite(STS) 
+      * eclipse enterpise java and Web Developer Tools 3.26
+         * Eclipse Java EE Developer Tools
+         * Eclipse Java Web Developer Tools         
+      
 * git
 * apahce tomcat 9 version
+* Oracle database 21c
 
 ### Steps
 1. git command line
