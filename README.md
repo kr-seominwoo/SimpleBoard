@@ -19,7 +19,6 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
 
 ## 설치방법 (IDE에서 사용)
 ### Prerequisites
-* JRE 17
 * IDE
    * Spring Tools Suite(STS) 
       * eclipse enterpise java and Web Developer Tools 3.26
@@ -70,4 +69,5 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
  * spring-jdbc 5.2.22.RELEASE
  * ojdbc10 19.14.0.0
  * jstl 1.2
-
+ * maven-compiler-source 1.8
+ * maven.compiler.target 1.8
