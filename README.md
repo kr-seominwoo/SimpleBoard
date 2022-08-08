@@ -48,7 +48,13 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
    내 프로젝트 -> Maven -> Update project
    ```
    
-4. Server 생성 및 실행
+4. Oracle databse 연결 설정
+   boardPrj/webapp/WEB-INF/spring/service-context.xml에서 database에 연결 설정
+      * url
+      * username
+      * password
+      
+5. Server 생성 및 실행
    
    ``` shell
    Windows -> Show View -> other -> server
