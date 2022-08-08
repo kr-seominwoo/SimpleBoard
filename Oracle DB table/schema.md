@@ -32,6 +32,8 @@ COMMENT_NUMBER | NUMBER | No | (null)
 
 3. 게시글 뷰(POST_VIEW)
 
+사용자 아이디, 게시글 번호, 제목, 작성 날짜, 좋아요, 조회수, 댓글 수
+
 COLUMN_NAME | DATA_TYPE | NULLABLE | DATA_DEFAULT
 -- | -- | -- | --
 USER_ID | NVARCHAR2(20) | No | (null)
