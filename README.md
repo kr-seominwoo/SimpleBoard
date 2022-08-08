@@ -47,6 +47,7 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
    ``` shell
    Windows -> Show View -> other -> server
    server 탭
-   creat a new Server -> Apache -> tomcat v9.0 server -> finish
+   creat a new Server -> Apache -> tomcat v9.0 server ->
+   add -> Tomcat installation directory에 설치한 톰캣 디렉토리 지정 -> finish
    ```
 
