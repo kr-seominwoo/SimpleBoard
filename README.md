@@ -73,3 +73,6 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
  * maven.compiler.source 1.8
  * maven.compiler.target 1.8
 
+
+## 환경
+ * Windows 10
