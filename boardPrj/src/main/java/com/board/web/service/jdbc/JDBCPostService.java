@@ -44,6 +44,7 @@ public class JDBCPostService implements PostService {
 
 		try {
 			Connection con = this.dataSource.getConnection();
+			con.setAutoCommit(false);
 			PreparedStatement st = con.prepareStatement(sql);
 
 			st.setString(1, writerId);
@@ -54,6 +55,7 @@ public class JDBCPostService implements PostService {
 
 			result = st.executeUpdate();
 
+			con.commit();
 			st.close();
 			con.close();
 		} catch (SQLException e) {
@@ -106,9 +108,9 @@ public class JDBCPostService implements PostService {
 		String sqlPost = "SELECT * FROM POST P WHERE P.POST_NUMBER = " + postNumber;
 		String sqlComment = "SELECT * FROM \"COMMENT\" C WHERE C.POST_NUMBER = " + postNumber
 				+ " ORDER BY C.COMMENT_DATE DESC";
-
+		
 		try {
-			Connection con = this.dataSource.getConnection();
+			Connection con = this.dataSource.getConnection();			
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sqlPost);
 
@@ -123,10 +125,12 @@ public class JDBCPostService implements PostService {
 				int like = rs.getInt("LIKE");
 
 				List<String> hashtagList = new ArrayList<>();
-				StringTokenizer tokenizer = new StringTokenizer(hashtags, ",");
-				while (tokenizer.hasMoreTokens()) {
-					hashtagList.add(tokenizer.nextToken());
-				}
+				if (hashtags != null) {
+					StringTokenizer tokenizer = new StringTokenizer(hashtags, ",");
+					while (tokenizer.hasMoreTokens()) {
+						hashtagList.add(tokenizer.nextToken());
+					}
+				}				
 
 				post = new Post(writerId, title, content, postDate, modifyDate, hashtagList, like, hit, postNumber,
 						commentList);
@@ -149,6 +153,7 @@ public class JDBCPostService implements PostService {
 			e.printStackTrace();
 		}
 
+		
 		return post;
 	}
 
@@ -168,6 +173,7 @@ public class JDBCPostService implements PostService {
 		String sqlPassword = "SELECT P.PASSWORD FROM POST P WHERE POST_NUMBER = " + postNumber;
 		try {
 			Connection con = dataSource.getConnection();
+			con.setAutoCommit(false);
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sqlPassword);
 
@@ -181,14 +187,12 @@ public class JDBCPostService implements PostService {
 					String sqlDeleteComment = "DELETE FROM \"COMMENT\" WHERE POST_NUMBER = " + postNumber;
 					result += st.executeUpdate(sqlDeleteComment);
 				}
-			} else {
-				return result;
 			}
 
+			con.commit();
 			st.close();
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -211,6 +215,7 @@ public class JDBCPostService implements PostService {
 
 		try {
 			Connection con = this.dataSource.getConnection();
+			con.setAutoCommit(false);
 			PreparedStatement st = con.prepareStatement(sql);
 
 			st.setString(1, writerId);
@@ -220,6 +225,7 @@ public class JDBCPostService implements PostService {
 
 			result = st.executeUpdate();
 
+			con.commit();
 			st.close();
 			con.close();
 		} catch (SQLException e) {
@@ -245,6 +251,7 @@ public class JDBCPostService implements PostService {
 		String sqlPassword = "SELECT C.PASSWORD FROM \"COMMENT\" C WHERE COMMENT_NUMBER = " + commentNumber;
 		try {
 			Connection con = dataSource.getConnection();
+			con.setAutoCommit(false);
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sqlPassword);
 
@@ -252,17 +259,22 @@ public class JDBCPostService implements PostService {
 				String compare = rs.getString("PASSWORD");
 
 				if (encryptedPassword.equals(compare)) {
-					String sqlDeleteComment = "DELETE FROM \"COMMENT\" WHERE COMMENT_NUMBER = " + commentNumber;
+					StringBuilder builder = new StringBuilder();
+					builder.append("UPDATE \"COMMENT\" ");
+					builder.append("SET ");
+					builder.append("CONTENT = '삭제된 댓글입니다' ");
+					builder.append("WHERE COMMENT_NUMBER = ");
+					builder.append(commentNumber);
+					
+					String sqlDeleteComment = builder.toString();					
 					result = st.executeUpdate(sqlDeleteComment);
 				}
-			} else {
-				return result;
 			}
 
+			con.commit();
 			st.close();
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
