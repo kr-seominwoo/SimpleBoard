@@ -68,7 +68,6 @@ public class JDBCPostService implements PostService {
 	public List<PostView> getPostViewList() {
 		List<PostView> list = new ArrayList<>();
 
-//		String sql = "SELECT * FROM POST P ORDER BY P.POST_DATE DESC";		
 		String sql = "SELECT * FROM POST_VIEW ORDER BY POST_DATE DESC"; 
 
 		try {
@@ -110,7 +109,8 @@ public class JDBCPostService implements PostService {
 				+ " ORDER BY C.COMMENT_DATE DESC";
 		
 		try {
-			Connection con = this.dataSource.getConnection();			
+			Connection con = this.dataSource.getConnection();	
+			con.setAutoCommit(false);
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sqlPost);
 
@@ -121,7 +121,7 @@ public class JDBCPostService implements PostService {
 				Date postDate = rs.getDate("POST_DATE");
 				Date modifyDate = rs.getDate("MODIFY_DATE");
 				String hashtags = rs.getString("HASHTAGS");
-				int hit = rs.getInt("HIT");
+				int hit = rs.getInt("HIT") + 1;
 				int like = rs.getInt("LIKE");
 
 				List<String> hashtagList = new ArrayList<>();
@@ -132,6 +132,9 @@ public class JDBCPostService implements PostService {
 					}
 				}				
 
+				String sqlHitUpdate = "UPDATE POST SET HIT = " + hit + " WHERE POST_NUMBER = " + postNumber;
+				st.executeUpdate(sqlHitUpdate);				
+				
 				post = new Post(writerId, title, content, postDate, modifyDate, hashtagList, like, hit, postNumber,
 						commentList);
 			}
@@ -147,6 +150,7 @@ public class JDBCPostService implements PostService {
 				commentList.add(comment);
 			}
 
+			con.commit();
 			st.close();
 			con.close();
 		} catch (SQLException e) {

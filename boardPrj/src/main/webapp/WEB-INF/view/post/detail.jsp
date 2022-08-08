@@ -33,6 +33,14 @@
 				<th>내용</th>
 				<td width="500px">${post.content}</td>
 			</tr>
+			<tr>
+				<th>조회수</th>
+				<td>${post.hit}</td>
+			</tr>
+			<tr>
+				<th>좋아요</th>
+				<td>${post.like}</td>
+			</tr>
 		</tbody>
 	</table>
 	<span>&nbsp;&nbsp; <c:forEach var="hashtag"
