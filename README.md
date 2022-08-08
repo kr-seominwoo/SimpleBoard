@@ -22,6 +22,7 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
 * JRE 17
 * IDE
    * Spring Tools Suite(STS)
+      -> maven 사용
 * git
 * apahce tomcat 9 version
 
