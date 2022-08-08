@@ -43,15 +43,22 @@
 			</tr>
 		</tbody>
 	</table>
-	<span>&nbsp;&nbsp; <c:forEach var="hashtag"
-			items="${post.hashtags}">
+	<form></form>
+	
+	<span>&nbsp;&nbsp; 
+	<c:forEach var="hashtag" items="${post.hashtags}">
         #${hashtag}, &nbsp;
-        </c:forEach>
+    </c:forEach>
 	</span>
 	<br>
 	<br>
 	<form action="edit" method="post">
-		<input style="display: none" type="number" readonly name="postNumber" value="${post.postNumber}" /> 
+		<input style="display: none" type="text" readonly name="title" value="${post.title}" />
+		<input style="display: none" type="text" readonly name="content" value="${post.content}" />  
+		<c:forEach var="hashtag" items="${post.hashtags}">
+		<input style="display: none" type="text" readonly name="hashTag" value="${hashtag}" />
+		</c:forEach>
+		<input style="display: none" type="number" readonly name="postNumber" value="${post.postNumber}" />  
 		<input type="text" name="password" required placeholder="비밀번호를 입력하세요">
 		<input class="btn" type="submit" value="수정하기" />
 	</form>

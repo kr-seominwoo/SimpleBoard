@@ -284,4 +284,70 @@ public class JDBCPostService implements PostService {
 
 		return result;
 	}
+
+	@Override
+	public int updatePost(String title, String content, String hashtags, int postNumber) {
+		int result = 0;
+
+		System.out.println("postNumber is " + postNumber);
+		
+		String sql = "UPDATE POST SET TITLE=?, CONTENT=?, HASHTAGS=? WHERE POST_NUMBER=?";
+		try {
+			Connection con = dataSource.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, title);
+			st.setString(2, content);
+			st.setString(3, hashtags);
+			st.setInt(4, postNumber);
+			
+			result = st.executeUpdate();
+
+			con.commit();
+			st.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
+	public int isYourPost(String password, int postNumber) {
+		final int PASSWORD_MATCH = 1;
+		int result = 0;
+
+		SHA256 sha256 = new SHA256();
+		String encryptedPassword = "";
+		try {
+			encryptedPassword = sha256.encrypt(password);
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+			return result;
+		}
+
+		String sqlPassword = "SELECT P.PASSWORD FROM POST P WHERE POST_NUMBER = " + postNumber;
+		try {
+			Connection con = dataSource.getConnection();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sqlPassword);
+
+			if (rs.next()) {
+				String compare = rs.getString("PASSWORD");
+
+				if (encryptedPassword.equals(compare)) {
+					result = PASSWORD_MATCH;
+				}
+			}
+
+			st.close();
+			con.close();
+		} catch (SQLException e) {
+			result = 0;
+			e.printStackTrace();
+		}
+
+		return result;		
+	}
 }

@@ -59,14 +59,36 @@ public class PostController {
 	}
 
 	@PostMapping("edit")
-	public String edit(String password, int postNumber) {
-		
-		return "/post/edit";
+	public String edit(String title, String content, String[] hashTag, String password, int postNumber, Model model) {
+		if (this.service.isYourPost(password, postNumber) == 1) {
+			model.addAttribute("title", title);
+			model.addAttribute("content", content);
+			model.addAttribute("hashTag", hashTag);
+			model.addAttribute("postNumber", postNumber);
+			return "/post/edit";
+		} else {
+			return "redirect:/post/detail?postNumber=" + postNumber;
+		}
 	}
 
 	@PostMapping("update")
-	public String update(String title, String content, String[] hashTag) {
-		return "redirect:/post/detail";
+	public String update(String title, String content, String[] hashTag, int postNumber) {
+		String hashTags = "";
+		if (hashTag != null) {
+			StringBuilder builder = new StringBuilder();
+			for (int idx = 0; idx < hashTag.length; ++idx) {
+				builder.append(hashTag[idx]);
+
+				if (idx != hashTag.length - 1) {
+					builder.append(",");
+				}
+			}
+
+			hashTags = builder.toString();
+		}
+		
+		this.service.updatePost(title, content, hashTags, postNumber);		
+		return "redirect:/post/detail?postNumber=" + postNumber;
 	}
 
 	@PostMapping("delete")
