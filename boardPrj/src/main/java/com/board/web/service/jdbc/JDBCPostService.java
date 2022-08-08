@@ -68,7 +68,8 @@ public class JDBCPostService implements PostService {
 	public List<PostView> getPostViewList() {
 		List<PostView> list = new ArrayList<>();
 
-		String sql = "SELECT * FROM POST P ORDER BY P.POST_DATE DESC";
+//		String sql = "SELECT * FROM POST P ORDER BY P.POST_DATE DESC";		
+		String sql = "SELECT * FROM POST_VIEW ORDER BY POST_DATE DESC"; 
 
 		try {
 			Connection con = this.dataSource.getConnection();
@@ -82,7 +83,7 @@ public class JDBCPostService implements PostService {
 				Date postDate = rs.getDate("POST_DATE");
 				
 				// 게시글의 댓글 수를 제대로 알아오도록 sql문 수정해야 함
-				int commentCount = 0;
+				int commentCount = rs.getInt("COMMENT_COUNT");
 				int hit = rs.getInt("HIT");
 				int like = rs.getInt("LIKE");
 
