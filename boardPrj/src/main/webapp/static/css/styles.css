@@ -62,6 +62,18 @@ input[type="text"] {
 	display: flex;	
 }
 
+.likeUnlikeBtnContainer form {
+	width: 48px;
+}
+
+.likeUnlikeBtnContainer input[type="submit"] {
+	font-size: 20px;
+	width: 40px;
+	margin-right: 25px;
+	cursor: pointer;
+	text-align: center;
+}
+
 .hashTagContainer {
 	margin-top: 10px;
 }
