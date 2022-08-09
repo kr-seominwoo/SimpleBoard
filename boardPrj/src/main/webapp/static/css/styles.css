@@ -9,3 +9,44 @@
 	cursor: pointer;
 	text-decoration: underline;
 }
+
+select {
+	height : 30.97px;
+}
+
+input {
+	width : 200px;
+	height : 30.97px;
+	text-align: left;
+}
+
+.listTable td {
+	text-align: center;
+}
+
+.listTable .title {
+	text-align: left;
+}
+
+.detailTable th {
+	text-align: center;
+}
+
+.detailTable td {
+	padding-left : 10px;
+}
+
+input[type="submit"] {
+	width: 80px;
+	height :30.97px;
+	text-align: center;
+}
+
+input[type="text"] {
+	height: 25px;
+}
+
+.listTable .title input[type="submit"] {
+	width: 150px;
+	text-align: left;
+}

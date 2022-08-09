@@ -7,15 +7,16 @@
 
 <head>
 <!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>글 수정</title>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>글 수정</title>
+	<link rel="stylesheet" type="text/css" href="/board/css/styles.css">
 </head>
 
 <body>
 	<h2>${post.title}</h2>
-	<table border="1">
+	<table border="1" class="detailTable">
 		<tbody>
 			<tr>
 				<th>작성자</th>

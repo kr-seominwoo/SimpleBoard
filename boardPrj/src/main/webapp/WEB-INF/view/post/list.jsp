@@ -22,7 +22,7 @@
   <h1>글 목록</h1>
   <span>전체 글 : ${board.totalPostCount} &nbsp;&nbsp; 전체 댓글 수 : ${board.totalCommentCount}</span>
   
-  <table border="1">
+  <table class="listTable" border="1">
     <thead>
       <tr>
         <th scope="col">번호</th>
@@ -42,7 +42,7 @@
     </c:if>
    	  <tr>
         <td>${postView.postNumber}</td>
-        <td>
+        <td class="title">
         	<form action="detail" method="post">
         		<input hidden type="text" readonly name="postNumber" value="${postView.postNumber}" />  
         		<input class="listTitleHyperLink" type="submit" value="${postView.title} ${newPost}" readonly />
@@ -65,8 +65,9 @@
  		<option value='writerId'>작성자</option>
  		<option value='hashtag'>해시태그</option>
  		<option value='content'>내용</option>
- 		<input style="width: 400px;" type="text" name="searchContent" placeholder="검색어를 입력하세요"/> 		
- 		<input type="submit" value="검색" />  	
+	</select>
+	<input type="text" name="searchContent" placeholder="검색어를 입력하세요"/> 		
+	<input type="submit" value="검색" />  	
   </form>  
   <br>
   <button><a href="write">새 글 작성하기</a></button>
