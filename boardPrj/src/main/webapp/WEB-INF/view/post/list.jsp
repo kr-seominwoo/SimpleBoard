@@ -15,6 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>글 목록</title>
+  <link rel="stylesheet" type="text/css" href="/board/css/styles.css">
 </head>
 
 <body>
@@ -39,17 +40,21 @@
     <c:if test="${postView.postDate.time >= time}">
     <c:set var="newPost" value="[new]"></c:set>
     </c:if>
-	    <form>
-	   	  <tr>
-	        <td>${postView.postNumber}</td>
-	        <td><a href="detail?postNumber=${postView.postNumber}">${postView.title} ${newPost}</a></td>
-	        <td>${postView.writerId}</td>
-	        <td><fmt:formatDate value="${postView.postDate}" pattern="yyyy-MM-dd"/></td>
-	        <td>${postView.commentCount}</td>
-	        <td>${postView.hit}</td>
-	        <td>${postView.like}</td>
-	      </tr>
-	    </form>
+   	  <tr>
+        <td>${postView.postNumber}</td>
+        <td>
+        	<form action="detail" method="post">
+        		<input hidden type="text" readonly name="postNumber" value="${postView.postNumber}" />  
+        		<input class="listTitleHyperLink" type="submit" value="${postView.title} ${newPost}" readonly />
+        	</form>
+        <%-- <a href="detail?postNumber=${postView.postNumber}">${postView.title} ${newPost}</a> --%>
+        </td>
+        <td>${postView.writerId}</td>
+        <td><fmt:formatDate value="${postView.postDate}" pattern="yyyy-MM-dd"/></td>
+        <td>${postView.commentCount}</td>
+        <td>${postView.hit}</td>
+        <td>${postView.like}</td>
+      </tr>
     </c:forEach>
     </tbody>
   </table>
