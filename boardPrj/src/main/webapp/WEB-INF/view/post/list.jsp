@@ -5,7 +5,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+	Date date = new Date();
+	long time3Day = date.getTime() - (long)(24 * 60 * 60 * 1000 * 3);
+	pageContext.setAttribute("time", time3Day);
+%>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,23 +33,24 @@
         <th scope="col">좋아요</th>
       </tr>
     </thead>
-    <tbody>
-    <tbody>
+    <tbody>    
     <c:forEach var="postView" items="${board.list}">
-    <form>
-      <tr>
-        <td>${postView.postNumber}</td>
-        <td><a href="detail?postNumber=${postView.postNumber}">${postView.title}</a></td>
-        <td>${postView.writerId}</td>
-        <td><fmt:formatDate value="${postView.postDate}" pattern="yyyy-MM-dd"/></td>
-        <td>${postView.commentCount}</td>
-        <td>${postView.hit}</td>
-        <td>${postView.like}</td>
-      </tr>
-    </form>
-
+    <c:set var="newPost" value=""></c:set>
+    <c:if test="${postView.postDate.time >= time}">
+    <c:set var="newPost" value="[new]"></c:set>
+    </c:if>
+	    <form>
+	   	  <tr>
+	        <td>${postView.postNumber}</td>
+	        <td><a href="detail?postNumber=${postView.postNumber}">${postView.title} ${newPost}</a></td>
+	        <td>${postView.writerId}</td>
+	        <td><fmt:formatDate value="${postView.postDate}" pattern="yyyy-MM-dd"/></td>
+	        <td>${postView.commentCount}</td>
+	        <td>${postView.hit}</td>
+	        <td>${postView.like}</td>
+	      </tr>
+	    </form>
     </c:forEach>
-
     </tbody>
   </table>
   <br>
