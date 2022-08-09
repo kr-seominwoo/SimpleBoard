@@ -42,10 +42,12 @@ public class JDBCPostService implements PostService {
 			return result;
 		}
 
+		Connection con = null;
+		PreparedStatement st = null;
 		try {
-			Connection con = this.dataSource.getConnection();
+			con = this.dataSource.getConnection();
 			con.setAutoCommit(false);
-			PreparedStatement st = con.prepareStatement(sql);
+			st = con.prepareStatement(sql);
 
 			st.setString(1, writerId);
 			st.setString(2, encryptedPassword);
@@ -56,10 +58,20 @@ public class JDBCPostService implements PostService {
 			result = st.executeUpdate();
 
 			con.commit();
-			st.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -110,10 +122,12 @@ public class JDBCPostService implements PostService {
 		builder.append(" ORDER BY POST_DATE DESC");
 		
 		String sql = builder.toString();
-
+		Connection con = null;
+		Statement st = null;
+		
 		try {
-			Connection con = this.dataSource.getConnection();
-			Statement st = con.createStatement();
+			con = this.dataSource.getConnection();
+			st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
@@ -130,11 +144,21 @@ public class JDBCPostService implements PostService {
 				totalCommentCount += commentCount;
 			}
 
-			board.setTotalCommentCount(totalCommentCount);
-			st.close();
-			con.close();
+			board.setTotalCommentCount(totalCommentCount);			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return board;
@@ -149,10 +173,13 @@ public class JDBCPostService implements PostService {
 		String sqlComment = "SELECT * FROM \"COMMENT\" C WHERE C.POST_NUMBER = " + postNumber
 				+ " ORDER BY C.COMMENT_DATE DESC";
 		
+		Connection con = null;
+		Statement st = null;
+		
 		try {
-			Connection con = this.dataSource.getConnection();	
+			con = this.dataSource.getConnection();	
 			con.setAutoCommit(false);
-			Statement st = con.createStatement();
+			st = con.createStatement();
 			ResultSet rs = st.executeQuery(sqlPost);
 
 			if (rs.next()) {
@@ -192,12 +219,21 @@ public class JDBCPostService implements PostService {
 			}
 
 			con.commit();
-			st.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}   finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-
 		
 		return post;
 	}
@@ -216,10 +252,13 @@ public class JDBCPostService implements PostService {
 		}
 
 		String sqlPassword = "SELECT P.PASSWORD FROM POST P WHERE POST_NUMBER = " + postNumber;
+		
+		Connection con = null;
+		Statement st = null;
 		try {
-			Connection con = dataSource.getConnection();
+			con = dataSource.getConnection();
 			con.setAutoCommit(false);
-			Statement st = con.createStatement();
+			st = con.createStatement();
 			ResultSet rs = st.executeQuery(sqlPassword);
 
 			if (rs.next()) {
@@ -235,10 +274,20 @@ public class JDBCPostService implements PostService {
 			}
 
 			con.commit();
-			st.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}  finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -258,10 +307,12 @@ public class JDBCPostService implements PostService {
 			return result;
 		}
 
+		Connection con = null;
+		PreparedStatement st = null;
 		try {
-			Connection con = this.dataSource.getConnection();
+			con = this.dataSource.getConnection();
 			con.setAutoCommit(false);
-			PreparedStatement st = con.prepareStatement(sql);
+			st = con.prepareStatement(sql);
 
 			st.setString(1, writerId);
 			st.setString(2, encryptedPassword);
@@ -271,10 +322,20 @@ public class JDBCPostService implements PostService {
 			result = st.executeUpdate();
 
 			con.commit();
-			st.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -294,10 +355,13 @@ public class JDBCPostService implements PostService {
 		}
 
 		String sqlPassword = "SELECT C.PASSWORD FROM \"COMMENT\" C WHERE COMMENT_NUMBER = " + commentNumber;
+		
+		Connection con = null;
+		Statement st = null;
 		try {
-			Connection con = dataSource.getConnection();
+			con = dataSource.getConnection();
 			con.setAutoCommit(false);
-			Statement st = con.createStatement();
+			st = con.createStatement();
 			ResultSet rs = st.executeQuery(sqlPassword);
 
 			if (rs.next()) {
@@ -317,10 +381,20 @@ public class JDBCPostService implements PostService {
 			}
 
 			con.commit();
-			st.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -331,10 +405,13 @@ public class JDBCPostService implements PostService {
 		int result = 0;
 
 		String sql = "UPDATE POST SET TITLE=?, CONTENT=?, HASHTAGS=? WHERE POST_NUMBER=?";
+		
+		Connection con = null;
+		PreparedStatement st = null;		
 		try {
-			Connection con = dataSource.getConnection();
+			con = dataSource.getConnection();
 			con.setAutoCommit(false);
-			PreparedStatement st = con.prepareStatement(sql);
+			st = con.prepareStatement(sql);
 			st.setString(1, title);
 			st.setString(2, content);
 			st.setString(3, hashtags);
@@ -343,10 +420,20 @@ public class JDBCPostService implements PostService {
 			result = st.executeUpdate();
 
 			con.commit();
-			st.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;
@@ -367,9 +454,12 @@ public class JDBCPostService implements PostService {
 		}
 
 		String sqlPassword = "SELECT P.PASSWORD FROM POST P WHERE POST_NUMBER = " + postNumber;
+		
+		Connection con = null;
+		Statement st = null;		
 		try {
-			Connection con = dataSource.getConnection();
-			Statement st = con.createStatement();
+			con = dataSource.getConnection();
+			st = con.createStatement();
 			ResultSet rs = st.executeQuery(sqlPassword);
 
 			if (rs.next()) {
@@ -380,14 +470,23 @@ public class JDBCPostService implements PostService {
 				}
 			}
 
-			st.close();
-			con.close();
 		} catch (SQLException e) {
 			result = 0;
 			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return result;		
 	}
-
 }
