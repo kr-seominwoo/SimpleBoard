@@ -47,7 +47,6 @@
         		<input hidden type="text" readonly name="postNumber" value="${postView.postNumber}" />  
         		<input class="listTitleHyperLink" type="submit" value="${postView.title} ${newPost}" readonly />
         	</form>
-        <%-- <a href="detail?postNumber=${postView.postNumber}">${postView.title} ${newPost}</a> --%>
         </td>
         <td>${postView.writerId}</td>
         <td><fmt:formatDate value="${postView.postDate}" pattern="yyyy-MM-dd"/></td>

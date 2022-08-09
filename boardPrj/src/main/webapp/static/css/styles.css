@@ -36,6 +36,13 @@ input {
 	padding-left : 10px;
 }
 
+.detailTable #postContent {
+	width: 400px;
+	height: 200px;
+	vertical-align : top;
+	padding-top : 10px;
+}
+
 input[type="submit"] {
 	width: 80px;
 	height :30.97px;
@@ -49,4 +56,12 @@ input[type="text"] {
 .listTable .title input[type="submit"] {
 	width: 150px;
 	text-align: left;
+}
+
+.likeUnlikeBtnContainer {
+	display: flex;	
+}
+
+.hashTagContainer {
+	margin-top: 10px;
 }

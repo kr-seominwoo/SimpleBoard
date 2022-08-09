@@ -32,7 +32,7 @@
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td width="500px">${post.content}</td>
+				<td id="postContent">${post.content}</td>
 			</tr>
 			<tr>
 				<th>조회수</th>
@@ -43,22 +43,23 @@
 				<td>${post.like}</td>
 			</tr>
 		</tbody>
-	</table>
-	<form></form>
-	<form action="like" method="post">
-		<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
-		<input type="submit" value="👍" />
-	</form>
-	<form action="unlike" method="post">
-		<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
-		<input type="submit" value="👎">
-	</form>
-	
-	<span>&nbsp;&nbsp; 
+	</table>	
+	<div class="hashTagContainer">&nbsp;&nbsp; 
 	<c:forEach var="hashtag" items="${post.hashtags}">
         #${hashtag}, &nbsp;
     </c:forEach>
-	</span>
+	</div>
+	<br>
+	<div class="likeUnlikeBtnContainer">
+		<form action="like" method="post">
+			<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
+			<input type="submit" value="👍" />
+		</form>
+		<form action="unlike" method="post">
+			<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
+			<input type="submit" value="👎">
+		</form>
+	</div>
 	<br>
 	<br>
 	<form action="edit" method="post">
@@ -110,7 +111,6 @@
 				</tr>				
 			</form>
 			</c:forEach>
-
 		</tbody>
 	</table>
 </body>
