@@ -179,6 +179,42 @@ public class JDBCPostService implements PostService {
 	}
 
 	@Override
+	public int hitUp(int postNumber) {
+		int result = 0;
+		
+		String sql = "UPDATE POST SET HIT = HIT + 1 WHERE POST_NUMBER = " + postNumber;
+		
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = this.dataSource.getConnection();
+			con.setAutoCommit(false);
+			st = con.createStatement();
+			result = st.executeUpdate(sql);
+			
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
+	@Override
 	public Post getPost(int postNumber) {
 		Post post = null;
 		List<Comment> commentList = new ArrayList<>();
@@ -203,7 +239,7 @@ public class JDBCPostService implements PostService {
 				Date postDate = rs.getDate("POST_DATE");
 				Date modifyDate = rs.getDate("MODIFY_DATE");
 				String hashtags = rs.getString("HASHTAGS");
-				int hit = rs.getInt("HIT") + 1;
+				int hit = rs.getInt("HIT");
 				int like = rs.getInt("LIKE");
 
 				List<String> hashtagList = new ArrayList<>();
@@ -214,9 +250,6 @@ public class JDBCPostService implements PostService {
 					}
 				}				
 
-				String sqlHitUpdate = "UPDATE POST SET HIT = " + hit + " WHERE POST_NUMBER = " + postNumber;
-				st.executeUpdate(sqlHitUpdate);				
-				
 				post = new Post(writerId, title, content, postDate, modifyDate, hashtagList, like, hit, postNumber,
 						commentList);
 			}
@@ -516,5 +549,72 @@ public class JDBCPostService implements PostService {
 		}
 
 		return result;		
+	}
+
+	@Override
+	public int like(int postNumber) {
+		int result = 0;
+		String sql = "UPDATE POST SET \"LIKE\" = \"LIKE\" + 1 WHERE POST_NUMBER=" + postNumber;
+		
+		Connection con = null;
+		Statement st = null;		
+		try {
+			con = dataSource.getConnection();
+			con.setAutoCommit(false);
+			st = con.createStatement();			
+			result = st.executeUpdate(sql);
+
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+
+	@Override
+	public int unlike(int postNumber) {
+		int result = 0;
+		
+		String sql = "UPDATE POST SET \"UNLIKE\" = \"UNLIKE\" + 1 WHERE POST_NUMBER=" + postNumber;
+		Connection con = null;
+		Statement st = null;		
+		try {
+			con = dataSource.getConnection();
+			con.setAutoCommit(false);
+			st = con.createStatement();			
+			result = st.executeUpdate(sql);
+
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
 	}
 }

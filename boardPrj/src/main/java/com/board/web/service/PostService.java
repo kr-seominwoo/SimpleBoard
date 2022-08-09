@@ -16,4 +16,7 @@ public interface PostService {
 	int deleteComment(String password, int commentNumber);
 	int updatePost(String title, String content, String[] hashTag, int postNumber);
 	int isYourPost(String password, int postNumber);
+	int hitUp(int postNumber);
+	int like(int postNumber);
+	int unlike(int postNumber);
 }

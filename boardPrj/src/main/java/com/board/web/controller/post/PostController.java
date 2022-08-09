@@ -51,6 +51,14 @@ public class PostController {
 		model.addAttribute("post", post);
 		return "/post/detail";
 	}
+	
+	@PostMapping("detail")
+	public String detailHitUp(int postNumber, Model model) {
+		this.service.hitUp(postNumber);
+		Post post = this.service.getPost(postNumber);
+		model.addAttribute("post", post);
+		return "/post/detail";
+	}
 
 	@PostMapping("edit")
 	public String edit(String title, String content, String[] hashTag, String password, int postNumber, Model model) {
@@ -86,6 +94,18 @@ public class PostController {
 	@PostMapping("deleteComment")
 	public String deleteComment(String password, int commentNumber, int postNumber) {
 		this.service.deleteComment(password, commentNumber);
+		return "redirect:/post/detail?postNumber=" + postNumber;
+	}
+	
+	@PostMapping("like")
+	public String like(int postNumber) {
+		this.service.like(postNumber);
+		return "redirect:/post/detail?postNumber=" + postNumber;
+	}
+	
+	@PostMapping("unlike")
+	public String unlike(int postNumber) {
+		this.service.unlike(postNumber);
 		return "redirect:/post/detail?postNumber=" + postNumber;
 	}
 }

@@ -44,6 +44,14 @@
 		</tbody>
 	</table>
 	<form></form>
+	<form action="like" method="post">
+		<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
+		<input type="submit" value="👍" />
+	</form>
+	<form action="unlike" method="post">
+		<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
+		<input type="submit" value="👎">
+	</form>
 	
 	<span>&nbsp;&nbsp; 
 	<c:forEach var="hashtag" items="${post.hashtags}">
@@ -53,24 +61,24 @@
 	<br>
 	<br>
 	<form action="edit" method="post">
-		<input style="display: none" type="text" readonly name="title" value="${post.title}" />
-		<input style="display: none" type="text" readonly name="content" value="${post.content}" />  
+		<input hidden type="text" readonly name="title" value="${post.title}" />
+		<input hidden type="text" readonly name="content" value="${post.content}" />  
 		<c:forEach var="hashtag" items="${post.hashtags}">
-		<input style="display: none" type="text" readonly name="hashTag" value="${hashtag}" />
+		<input hidden type="text" readonly name="hashTag" value="${hashtag}" />
 		</c:forEach>
-		<input style="display: none" type="number" readonly name="postNumber" value="${post.postNumber}" />  
+		<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
 		<input type="text" name="password" required placeholder="비밀번호를 입력하세요">
 		<input class="btn" type="submit" value="수정하기" />
 	</form>
 	<form action="delete" method="post">
-		<input style="display: none" type="number" readonly name="postNumber" value="${post.postNumber}" /> 
+		<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" /> 
 		<input type="text" name="password" required placeholder="비밀번호를 입력하세요">
 		<input class="btn" type="submit" value="삭제하기" />
 	</form>
 
 	<h3>댓글</h3>
 	<form action="registComment" method="post">
-		<input style="display: none" type="number" readonly name="postNumber" value="${post.postNumber}" /> 
+		<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" /> 
 		<input type="text" name="writerId" placeholder="작성자" />
 		<input type="text" name="password" placeholder="비밀번호" />
 		<input type="text" name="content" required placeholder="댓글을 입력하세요" /> <input type="submit" value="제출" />
@@ -90,8 +98,8 @@
 		<tbody>		
 			<c:forEach var="comment" items="${post.commentList}">
 			<form action="deleteComment" method="post">
-				<input style="display: none" type="number" readonly name="postNumber" value="${comment.postNumber}" />
-				<input style="display: none" type="number" readonly name="commentNumber" value="${comment.commentNumber}" />
+				<input hidden type="number" readonly name="postNumber" value="${comment.postNumber}" />
+				<input hidden type="number" readonly name="commentNumber" value="${comment.commentNumber}" />
 				<tr>
 					<td>${comment.userId}</td>
 					<td width="300px">${comment.content}</td>
