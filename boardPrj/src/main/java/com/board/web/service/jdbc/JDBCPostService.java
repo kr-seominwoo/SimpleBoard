@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.board.web.entity.Board;
 import com.board.web.entity.Comment;
 import com.board.web.entity.Post;
 import com.board.web.entity.PostView;
@@ -64,9 +65,12 @@ public class JDBCPostService implements PostService {
 		return result;
 	}
 
+
 	@Override
-	public List<PostView> getPostViewList() {
+	public Board getBoard() {
 		List<PostView> list = new ArrayList<>();
+		Board board = new Board(list, 0);
+		int totalCommentCount = 0;
 
 		String sql = "SELECT * FROM POST_VIEW ORDER BY POST_DATE DESC"; 
 
@@ -88,15 +92,18 @@ public class JDBCPostService implements PostService {
 
 				PostView postView = new PostView(postNumber, title, writerId, postDate, commentCount, hit, like);
 				list.add(postView);
+				totalCommentCount += commentCount;
 			}
 
+			board.setTotalCommentCount(totalCommentCount);
 			st.close();
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return list;
+		return board;
+		
 	}
 
 	@Override
@@ -289,8 +296,6 @@ public class JDBCPostService implements PostService {
 	public int updatePost(String title, String content, String hashtags, int postNumber) {
 		int result = 0;
 
-		System.out.println("postNumber is " + postNumber);
-		
 		String sql = "UPDATE POST SET TITLE=?, CONTENT=?, HASHTAGS=? WHERE POST_NUMBER=?";
 		try {
 			Connection con = dataSource.getConnection();
@@ -350,4 +355,5 @@ public class JDBCPostService implements PostService {
 
 		return result;		
 	}
+
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.board.web.entity.Board;
 import com.board.web.entity.Post;
 import com.board.web.entity.PostView;
 import com.board.web.service.jdbc.JDBCPostService;
@@ -21,8 +22,8 @@ public class PostController {
 
 	@GetMapping("list")
 	public String list(Model model) {
-		List<PostView> list = service.getPostViewList();
-		model.addAttribute("list", list);
+		Board board = this.service.getBoard();
+		model.addAttribute("board", board);
 		return "/post/list";
 	}
 
