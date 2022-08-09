@@ -44,7 +44,7 @@
             </c:forEach>
             </tbody>            
         </table>
-        <input style="display: none" type="number" readonly name="postNumber" value="${postNumber}" />
+        <input hidden type="number" readonly name="postNumber" value="${postNumber}" />
         <input class="btn" type="submit" value="수정하기" />
     </form>
     <script src="js/jquery.min.js"></script>
