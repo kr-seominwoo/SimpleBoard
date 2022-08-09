@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.board.web.entity.Board;
 import com.board.web.entity.Post;
-import com.board.web.entity.PostView;
 import com.board.web.service.jdbc.JDBCPostService;
 
 @Controller
