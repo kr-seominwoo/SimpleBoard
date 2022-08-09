@@ -30,6 +30,7 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
 * git
 * apahce tomcat 9 version
 * Oracle database 21c
+   * [테이블 DLL](https://github.com/TotheMoon12/nts-0825-tjalsdnss/blob/main/Oracle%20DB%20table/TABLE%20DLL.sql)
 
 ### Steps
 1. git command line
