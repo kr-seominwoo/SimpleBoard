@@ -29,9 +29,23 @@ public class JDBCPostService implements PostService {
 	DataSource dataSource;
 
 	@Override
-	public int registPost(String writerId, String title, String content, String password, String hashtags) {
+	public int registPost(String writerId, String title, String content, String password, String[] hashTag) {
 		int result = 0;
 
+		String hashTags = "";
+		if (hashTag != null) {
+			StringBuilder builder = new StringBuilder();
+			for (int idx = 0; idx < hashTag.length; ++idx) {
+				builder.append(hashTag[idx]);
+
+				if (idx != hashTag.length - 1) {
+					builder.append(",");
+				}
+			}
+
+			hashTags = builder.toString();
+		}
+		
 		String sql = "INSERT INTO POST(USER_ID, PASSWORD, TITLE, CONTENT, HASHTAGS, POST_NUMBER) VALUES(?,?,?,?,?, POST_NUMBER_SEQ.NEXTVAL)";
 		SHA256 sha256 = new SHA256();
 		String encryptedPassword = "";
@@ -53,7 +67,7 @@ public class JDBCPostService implements PostService {
 			st.setString(2, encryptedPassword);
 			st.setString(3, title);
 			st.setString(4, content);
-			st.setString(5, hashtags);
+			st.setString(5, hashTags);
 
 			result = st.executeUpdate();
 
@@ -401,9 +415,23 @@ public class JDBCPostService implements PostService {
 	}
 
 	@Override
-	public int updatePost(String title, String content, String hashtags, int postNumber) {
+	public int updatePost(String title, String content, String[] hashTag, int postNumber) {
 		int result = 0;
 
+		String hashTags = "";
+		if (hashTag != null) {
+			StringBuilder builder = new StringBuilder();
+			for (int idx = 0; idx < hashTag.length; ++idx) {
+				builder.append(hashTag[idx]);
+
+				if (idx != hashTag.length - 1) {
+					builder.append(",");
+				}
+			}
+
+			hashTags = builder.toString();
+		}
+		
 		String sql = "UPDATE POST SET TITLE=?, CONTENT=?, HASHTAGS=? WHERE POST_NUMBER=?";
 		
 		Connection con = null;
@@ -414,7 +442,7 @@ public class JDBCPostService implements PostService {
 			st = con.prepareStatement(sql);
 			st.setString(1, title);
 			st.setString(2, content);
-			st.setString(3, hashtags);
+			st.setString(3, hashTags);
 			st.setInt(4, postNumber);
 			
 			result = st.executeUpdate();

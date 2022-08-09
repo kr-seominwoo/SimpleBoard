@@ -41,21 +41,7 @@ public class PostController {
 
 	@PostMapping("regist")
 	public String regist(String writerId, String title, String content, String password, String[] hashTag) {
-		String hashTags = "";
-		if (hashTag != null) {
-			StringBuilder builder = new StringBuilder();
-			for (int idx = 0; idx < hashTag.length; ++idx) {
-				builder.append(hashTag[idx]);
-
-				if (idx != hashTag.length - 1) {
-					builder.append(",");
-				}
-			}
-
-			hashTags = builder.toString();
-		}
-
-		this.service.registPost(writerId, title, content, password, hashTags);
+		this.service.registPost(writerId, title, content, password, hashTag);
 		return "redirect:/post/list";
 	}
 
@@ -80,22 +66,8 @@ public class PostController {
 	}
 
 	@PostMapping("update")
-	public String update(String title, String content, String[] hashTag, int postNumber) {
-		String hashTags = "";
-		if (hashTag != null) {
-			StringBuilder builder = new StringBuilder();
-			for (int idx = 0; idx < hashTag.length; ++idx) {
-				builder.append(hashTag[idx]);
-
-				if (idx != hashTag.length - 1) {
-					builder.append(",");
-				}
-			}
-
-			hashTags = builder.toString();
-		}
-		
-		this.service.updatePost(title, content, hashTags, postNumber);		
+	public String update(String title, String content, String[] hashTag, int postNumber) {		
+		this.service.updatePost(title, content, hashTag, postNumber);		
 		return "redirect:/post/detail?postNumber=" + postNumber;
 	}
 
@@ -108,14 +80,12 @@ public class PostController {
 	@PostMapping("registComment")
 	public String registComment(String writerId, String content, String password, int postNumber) {
 		this.service.registComment(writerId, content, password, postNumber);
-		
 		return "redirect:/post/detail?postNumber=" + postNumber;
 	}
 	
 	@PostMapping("deleteComment")
 	public String deleteComment(String password, int commentNumber, int postNumber) {
 		this.service.deleteComment(password, commentNumber);
-		
 		return "redirect:/post/detail?postNumber=" + postNumber;
 	}
 }
