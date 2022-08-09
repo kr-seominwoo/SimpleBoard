@@ -14,7 +14,9 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
     * 사용자는 전체 글 목록을 조회할 수 있다
     * 사용자는 목록에서 전체 글 수, 댓글 수를 확인할 수 있다
     * 게시글 목록에는 제목, 작성자, 작성일시, 댓글 수, 조회수, 좋아요수를 표시한다
+    * 최근 3일 이내의 글에는 [new] 키워드가 붙어 식별한다
     * 사용자는 글의 제목을 클릭하여 세부내용을 볼 수 있다
+    
 
 4. 보안
     * 본인 확인을 위한 비밀번호는 암호화하여 DB에 저장한다
@@ -30,6 +32,7 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
 * git
 * apahce tomcat 9 version
 * Oracle database 21c
+   * [테이블 DLL](https://github.com/TotheMoon12/nts-0825-tjalsdnss/blob/main/Oracle%20DB%20table/TABLE%20DLL.sql)
 
 ### Steps
 1. git command line
