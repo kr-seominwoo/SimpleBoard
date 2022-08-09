@@ -98,13 +98,14 @@ public class JDBCPostService implements PostService {
 		StringBuilder builder = new StringBuilder();
 		builder.append("SELECT * FROM POST_VIEW");
 		if (!field.equals("") && !searchContent.equals("")) {
+			builder.append(" WHERE POST_NUMBER IN");
+			builder.append(" (SELECT POST_NUMBER");
+			builder.append(" FROM POST");
 			builder.append(" WHERE ");
-
-			
 			builder.append(field);
 			builder.append(" LIKE '%");
 			builder.append(searchContent);
-			builder.append("%'");
+			builder.append("%')");
 		}		
 		builder.append(" ORDER BY POST_DATE DESC");
 		
