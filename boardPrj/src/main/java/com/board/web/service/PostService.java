@@ -9,6 +9,7 @@ import com.board.web.entity.PostView;
 public interface PostService {
 	int registPost(String writerId, String title, String content, String password, String hashtags);
 	Board getBoard();
+	Board getBoard(String field, String searchContent);
 	Post getPost(int postNumber);
 	int deletePost(String password, int postNumber);
 	int registComment(String writerId, String content, String password, int postNumber);

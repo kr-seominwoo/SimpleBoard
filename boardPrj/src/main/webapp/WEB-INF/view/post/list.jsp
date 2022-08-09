@@ -54,6 +54,16 @@
     </tbody>
   </table>
   <br>
+  <form action="list" method="post">
+  	<select name="field">
+ 		<option value='title' selected>제목</option>
+ 		<option value='writerId'>작성자</option>
+ 		<option value='hashtag'>해시태그</option>
+ 		<option value='content'>내용</option>
+ 		<input style="width: 400px;" type="text" name="searchContent" placeholder="검색어를 입력하세요"/> 		
+ 		<input type="submit" value="검색" />  	
+  </form>  
+  <br>
   <button><a href="write">새 글 작성하기</a></button>
 </body>
 

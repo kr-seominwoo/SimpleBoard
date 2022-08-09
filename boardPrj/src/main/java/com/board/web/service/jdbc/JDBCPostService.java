@@ -68,11 +68,47 @@ public class JDBCPostService implements PostService {
 
 	@Override
 	public Board getBoard() {
+		return getBoard("","");
+	}
+	
+	@Override
+	public Board getBoard(String field, String searchContent) {
 		List<PostView> list = new ArrayList<>();
 		Board board = new Board(list, 0);
 		int totalCommentCount = 0;
 
-		String sql = "SELECT * FROM POST_VIEW ORDER BY POST_DATE DESC"; 
+		switch (field) {
+		case "title":
+			field = "TITLE";
+			break;
+		case "writerId":
+			field = "USER_ID";
+			break;
+		case "content":
+			field = "CONTENT";
+			break;
+		case "hashtag":
+			field = "HASHTAGS";
+			break;
+		default:
+			field = "";
+			break;
+		}		
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("SELECT * FROM POST_VIEW");
+		if (!field.equals("") && !searchContent.equals("")) {
+			builder.append(" WHERE ");
+
+			
+			builder.append(field);
+			builder.append(" LIKE '%");
+			builder.append(searchContent);
+			builder.append("%'");
+		}		
+		builder.append(" ORDER BY POST_DATE DESC");
+		
+		String sql = builder.toString();
 
 		try {
 			Connection con = this.dataSource.getConnection();
@@ -81,16 +117,14 @@ public class JDBCPostService implements PostService {
 
 			while (rs.next()) {
 				int postNumber = rs.getInt("POST_NUMBER");
-				String title = rs.getString("TITLE");
-				String writerId = rs.getString("USER_ID");
+				String postTitle = rs.getString("TITLE");
+				String postWriterId = rs.getString("USER_ID");
 				Date postDate = rs.getDate("POST_DATE");
-				
-				// 게시글의 댓글 수를 제대로 알아오도록 sql문 수정해야 함
 				int commentCount = rs.getInt("COMMENT_COUNT");
 				int hit = rs.getInt("HIT");
 				int like = rs.getInt("LIKE");
 
-				PostView postView = new PostView(postNumber, title, writerId, postDate, commentCount, hit, like);
+				PostView postView = new PostView(postNumber, postTitle, postWriterId, postDate, commentCount, hit, like);
 				list.add(postView);
 				totalCommentCount += commentCount;
 			}
@@ -103,7 +137,6 @@ public class JDBCPostService implements PostService {
 		}
 
 		return board;
-		
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.web.entity.Board;
 import com.board.web.entity.Post;
@@ -23,6 +24,13 @@ public class PostController {
 	public String list(Model model) {
 		Board board = this.service.getBoard();
 		model.addAttribute("board", board);
+		return "/post/list";
+	}
+	
+	@PostMapping("list")
+	public String search(@RequestParam(defaultValue="")String field, @RequestParam(defaultValue="")String searchContent, Model model) {
+		Board board = this.service.getBoard(field, searchContent);
+		model.addAttribute("board", board);		
 		return "/post/list";
 	}
 
