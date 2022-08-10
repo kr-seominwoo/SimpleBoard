@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>글 수정</title>
+	<title>${post.title}</title>
 	<link rel="stylesheet" type="text/css" href="/board/css/styles.css">
 </head>
 
@@ -47,7 +47,7 @@
 	<div class="hashTagContainer">&nbsp;&nbsp; 
 	<c:forEach var="hashtag" items="${post.hashtags}">
         #${hashtag}, &nbsp;
-    </c:forEach>
+    </c:forEach>    
 	</div>
 	<br>
 	<div class="likeUnlikeBtnContainer">
@@ -114,5 +114,4 @@
 		</tbody>
 	</table>
 </body>
-
 </html>
