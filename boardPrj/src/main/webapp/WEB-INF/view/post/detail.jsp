@@ -40,7 +40,7 @@
 			</tr>
 			<tr>
 				<th>좋아요</th>
-				<td>${post.like}</td>
+				<td id="like" postNumber=${post.postNumber}>${post.like}</td>
 			</tr>
 		</tbody>
 	</table>	
@@ -49,16 +49,10 @@
         #${hashtag}, &nbsp;
     </c:forEach>    
 	</div>
-	<br>
+	<br>	
 	<div class="likeUnlikeBtnContainer">
-		<form action="like" method="post">
-			<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
-			<input type="submit" value="👍" />
-		</form>
-		<form action="unlike" method="post">
-			<input hidden type="number" readonly name="postNumber" value="${post.postNumber}" />  
-			<input type="submit" value="👎">
-		</form>
+		<button id="likeBtn">👍</button>
+		<button id="unlikeBtn">👎</button>
 	</div>
 	<br>
 	<br>
@@ -113,5 +107,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+    <script src="/board/js/jquery.min.js"></script>
+	<script src="/board/js/load.js"></script>
 </body>
 </html>
