@@ -81,4 +81,5 @@ spring을 활용하여 글과 댓글을 작성할 수 있는 게시판을 구현
 
 
 ## 환경
- * Windows 10
+ * os : Windows 10
+ * browser : chrome
