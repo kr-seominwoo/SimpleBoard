@@ -61,10 +61,6 @@ input[type="submit"] {
 	text-align: center;
 }
 
-/* input[type="text"] {
-	height: 25px;
-}
- */
 .listTable .title input[type="submit"] {
 	width: 150px;
 	text-align: left;
