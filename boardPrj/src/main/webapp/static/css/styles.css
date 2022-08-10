@@ -10,13 +10,17 @@
 	text-decoration: underline;
 }
 
+button {
+	height: 30.97px;
+}
+
 select {
-	height : 30.97px;
+	height: 30.97px;
 }
 
 input {
-	width : 200px;
-	height : 30.97px;
+	width: 200px;
+	height: 30.97px;
 	text-align: left;
 }
 
@@ -45,7 +49,7 @@ input {
 
 input[type="submit"] {
 	width: 80px;
-	height :30.97px;
+	height: 30.97px;
 	text-align: center;
 }
 
