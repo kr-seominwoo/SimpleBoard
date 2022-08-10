@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.board.web.entity.Board;
 import com.board.web.entity.Post;
@@ -97,15 +98,17 @@ public class PostController {
 		return "redirect:/post/detail?postNumber=" + postNumber;
 	}
 	
+	@ResponseBody
 	@PostMapping("like")
 	public String like(int postNumber) {
-		this.service.like(postNumber);
-		return "redirect:/post/detail?postNumber=" + postNumber;
+		String likeCount = Integer.toString(this.service.like(postNumber));
+		return likeCount;
 	}
 	
+	@ResponseBody
 	@PostMapping("unlike")
 	public String unlike(int postNumber) {
 		this.service.unlike(postNumber);
-		return "redirect:/post/detail?postNumber=" + postNumber;
+		return "success";
 	}
 }
