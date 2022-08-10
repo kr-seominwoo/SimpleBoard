@@ -554,7 +554,9 @@ public class JDBCPostService implements PostService {
 	@Override
 	public int like(int postNumber) {
 		int result = 0;
+		
 		String sql = "UPDATE POST SET \"LIKE\" = \"LIKE\" + 1 WHERE POST_NUMBER=" + postNumber;
+		String sqlQuery = "SELECT \"LIKE\" FROM POST WHERE POST_NUMBER=" + postNumber;
 		
 		Connection con = null;
 		Statement st = null;		
@@ -563,8 +565,13 @@ public class JDBCPostService implements PostService {
 			con.setAutoCommit(false);
 			st = con.createStatement();			
 			result = st.executeUpdate(sql);
+			
+			ResultSet rs = st.executeQuery(sqlQuery);
+			if (rs.next()) {
+				result = rs.getInt("LIKE");
+			}
 
-			con.commit();
+			con.commit();	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -589,14 +596,21 @@ public class JDBCPostService implements PostService {
 	public int unlike(int postNumber) {
 		int result = 0;
 		
-		String sql = "UPDATE POST SET \"UNLIKE\" = \"UNLIKE\" + 1 WHERE POST_NUMBER=" + postNumber;
+		String sql = "UPDATE POST SET UNLIKE = UNLIKE + 1 WHERE POST_NUMBER=" + postNumber;
+		String sqlQuery = "SELECT UNLIKE FROM POST WHERE POST_NUMBER=" + postNumber;
+		
 		Connection con = null;
 		Statement st = null;		
 		try {
 			con = dataSource.getConnection();
 			con.setAutoCommit(false);
-			st = con.createStatement();			
+			st = con.createStatement();	
+			
 			result = st.executeUpdate(sql);
+			ResultSet rs = st.executeQuery(sqlQuery);
+			if (rs.next()) {
+				result = rs.getInt("UNLIKE");
+			}			
 
 			con.commit();
 		} catch (SQLException e) {
