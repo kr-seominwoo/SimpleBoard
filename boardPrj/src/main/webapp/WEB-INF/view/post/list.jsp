@@ -11,14 +11,15 @@
 	pageContext.setAttribute("time", time3Day);
 %>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>글 목록</title>
-  <link rel="stylesheet" type="text/css" href="/board/css/styles.css">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>글 목록</title>
+<link rel="stylesheet" type="text/css" href="/board/css/styles.css">
 </head>
 
 <body>
+<div class="container">
   <h1>글 목록</h1>
   <span>전체 글 : ${board.totalPostCount} &nbsp;&nbsp; 전체 댓글 수 : ${board.totalCommentCount}</span>
   
@@ -70,6 +71,8 @@
   </form>  
   <br>
   <button><a href="write">새 글 작성하기</a></button>
+</div>
+
 </body>
 
 </html>

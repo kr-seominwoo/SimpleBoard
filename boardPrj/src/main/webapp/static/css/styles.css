@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+.container {
+	text-align: center;
+}
+
+.container table {
+	margin: auto;
+}
+
 .listTitleHyperLink {
 	border: 0;
 	outline: 0;
@@ -32,8 +40,8 @@ input {
 	text-align: left;
 }
 
-.detailTable th {
-	text-align: center;
+.detailTable td {
+	text-align: left;
 }
 
 .detailTable td {
@@ -53,31 +61,23 @@ input[type="submit"] {
 	text-align: center;
 }
 
-input[type="text"] {
+/* input[type="text"] {
 	height: 25px;
 }
-
+ */
 .listTable .title input[type="submit"] {
 	width: 150px;
 	text-align: left;
 }
 
 .likeUnlikeBtnContainer {
-	display: flex;	
+	display: flex;
+	justify-content: center;
 }
 
-.likeUnlikeBtnContainer form {
-	width: 48px;
+.content {
+	width: 200.96px;
+	height: 200px;
+	vertical-align : text-top;
 }
 
-.likeUnlikeBtnContainer input[type="submit"] {
-	font-size: 20px;
-	width: 40px;
-	margin-right: 25px;
-	cursor: pointer;
-	text-align: center;
-}
-
-.hashTagContainer {
-	margin-top: 10px;
-}
